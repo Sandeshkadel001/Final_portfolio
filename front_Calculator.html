@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Calculator</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f3f4f6;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: rgb(94, 221, 249);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h1 {
+            color: #ff4d4d;
+        }
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff4d4d;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #030303;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Love Calculator</h1>
+        <input type="text" id="name1" placeholder="Enter the first name" required>
+        <input type="text" id="name2" placeholder="Enter the second name" required>
+        <button onclick="calculateLoveScore()">Calculate Love Score</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateLoveScore() {
+            const name1 = document.getElementById("name1").value.trim().toLowerCase();
+            const name2 = document.getElementById("name2").value.trim().toLowerCase();
+
+            // Check if both names are entered
+            if (!name1 || !name2) {
+                alert("Please enter both names.");
+                return;
+            }
+
+            const combinedNames = name1 + name2;
+
+            // Counting occurrences of letters
+            const trueCount = (combinedNames.match(/[ars]/g) || []).length; // Counting 'a', 'r', 's'
+            const loveCount = (combinedNames.match(/[cadut]/g) || []).length; // Counting 'c', 'a', 'u', 'd', 't'
+
+            const totalScore = parseInt(trueCount.toString() + loveCount.toString());
+            const percentage = totalScore; // Using total score directly as percentage
+
+            // Display the love percentage with a congratulatory message
+            const message = `Congratulations! Your love score is ${percentage}%.`;
+            document.getElementById("result").innerText = message;
+        }
+    </script>
+
+</body>
+</html>

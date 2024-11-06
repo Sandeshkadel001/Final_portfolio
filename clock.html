@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Digital Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black; /* Dark background */
+            color: white; /* Text color */
+            text-align: center; /* Center align text */
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full height */
+            display: flex; /* Flexbox for centering */
+            flex-direction: column; /* Stack items vertically */
+            justify-content: center; /* Center vertically */
+            align-items: center; /* Center horizontally */
+        }
+
+        h1 {
+            font-size: 24px; /* Title font size */
+            margin-bottom: 10px; /* Margin on bottom */
+            animation: fadeIn 1s; /* Fade-in animation */
+        }
+
+        #clock {
+            font-size: 48px; /* Clock font size */
+            font-weight: bold; /* Bold text */
+            color: #00f0ff; /* Clock color */
+            margin: 50px 0; /* Vertical margin */
+            animation: pulse 1.5s infinite; /* Pulsing animation */
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Digital Clock</h1>
+    <div id="clock">00:00:00 AM</div>
+
+    <script>
+        function updateClock() {
+            const now = new Date(); // Get the current date and time
+            let hours = now.getHours(); // Get hours
+            const minutes = now.getMinutes(); // Get minutes
+            const seconds = now.getSeconds(); // Get seconds
+            const ampm = hours >= 12 ? 'PM' : 'AM'; // Determine AM or PM
+
+            // Convert hours from 24-hour to 12-hour format
+            hours = hours % 12; 
+            hours = hours ? hours : 12; // The hour '0' should be '12'
+            const formattedMinutes = String(minutes).padStart(2, '0'); // Add leading zero if needed
+            const formattedSeconds = String(seconds).padStart(2, '0'); // Add leading zero if needed
+
+            // Update the clock display
+            document.getElementById('clock').textContent = `${hours}:${formattedMinutes}:${formattedSeconds} ${ampm}`;
+        }
+
+        // Update clock every second
+        setInterval(updateClock, 1000);
+
+        // Initial call to display the clock immediately
+        updateClock();
+    </script>
+</body>
+</html>

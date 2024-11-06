@@ -1,0 +1,25 @@
+/ Smooth scroll for nav links
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        target.scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
+});
+
+// Fade-in animation on scroll
+const fadeInSections = document.querySelectorAll('.fade-in');
+
+const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+    });
+}, { threshold: 0.1 });
+
+fadeInSections.forEach(section => {
+    appearOnScroll.observe(section);
+});

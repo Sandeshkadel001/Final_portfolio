@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #2f2e2e;
+            color: #333;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background: #63c3f7;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            padding: 10px;
+            width: calc(100% - 22px);
+            margin-bottom: 10px;
+            border: 4px solid #f5ba55;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: rgb(251, 249, 247);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #message {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+
+        #attempts {
+            margin-top: 10px;
+            display: none; /* Hide attempts initially */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Guessing Game</h1>
+        <p>I'm thinking of a number between 1 and 10. Can you guess what it is?</p>
+        <select id="guessInput">
+            <option value="">Select a number</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <button id="guessButton">Guess</button>
+        <div id="message"></div>
+        <div id="attempts"></div>
+    </div>
+    <script>
+        let lowerBound = 1;
+        let upperBound = 10;
+        let targetNumber = Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
+        let attempts = 0;
+        const maxAttempts = 10;
+
+        document.getElementById('guessButton').addEventListener('click', () => {
+            const guessInput = document.getElementById('guessInput');
+            const guess = Number(guessInput.value);
+            const messageDiv = document.getElementById('message');
+            const attemptsDiv = document.getElementById('attempts');
+
+            // Check if input is empty
+            if (guessInput.value === '') {
+                messageDiv.textContent = "Please select a number before guessing.";
+                return; // Exit the function early
+            }
+
+            // Increment attempts
+            attempts++;
+
+            if (attempts > maxAttempts) {
+                messageDiv.textContent = `Game over! You've reached the maximum number of attempts. The number was ${targetNumber}.`;
+                guessInput.disabled = true; // Disable input after max attempts
+                return; // Exit the function
+            }
+
+            if (guess < targetNumber) {
+                messageDiv.textContent = "Too low! Try again.";
+            } else if (guess > targetNumber) {
+                messageDiv.textContent = "Too high! Try again.";
+            } else {
+                messageDiv.textContent = `Congratulations! You guessed the number ${targetNumber}.`;
+                attemptsDiv.textContent = `You took ${attempts} attempts.`;
+                attemptsDiv.style.display = 'block'; // Show attempts after correct guess
+                guessInput.disabled = true; // Disable input after correct guess
+            }
+
+            guessInput.selectedIndex = 0; // Reset the dropdown
+        });
+    </script>
+</body>
+</html>
